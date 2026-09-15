@@ -47,8 +47,8 @@ export default function HomePage() {
           <Button href="/visit" variant="secondary">
             View Full Weekly Schedule
           </Button>
-          <Button href="/media" variant="primary">
-            Watch the Livestream
+          <Button href="/media#gallery" variant="primary">
+            View Photo Gallery
           </Button>
         </div>
       </section>

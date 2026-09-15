@@ -14,8 +14,13 @@ import MediaGallery, { type GallerySection } from "@/components/MediaGallery";
 export const metadata: Metadata = {
   title: "Media",
   description:
-    "Watch ISKCON Austin's livestream, browse our YouTube archive of classes and kirtans, and view photos from temple life and festivals.",
+    "Browse photos from temple life, Sunday programs, and festivals at ISKCON Austin.",
 };
+
+// Livestream + Video Archive are hidden until real video content exists.
+// Flip to true to bring both sections back (and restore the metadata/hero
+// copy and the "Watch" links in Navbar and on the homepage).
+const SHOW_VIDEO_SECTIONS = false;
 
 const archive = [
   { title: "Sunday Class — Bhagavad-gita 2.13", icon: ScriptureIcon },
@@ -68,55 +73,59 @@ export default function MediaPage() {
   return (
     <div>
       <PageHero
-        eyebrow="Watch & Listen"
+        eyebrow="Moments from the Temple"
         title="Media"
-        description="Can't make it in person? Join us online for live programs, or catch up with our video archive and photo gallery."
+        description="Browse photos from temple life, Sunday programs, and festival celebrations at ISKCON Austin."
         image="/media/banner.jpg"
       />
 
-      {/* Livestream */}
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-20">
-        <SectionHeading eyebrow="Join Live" title="Livestream" />
-        <div className="mt-8 relative aspect-video w-full rounded-2xl bg-gradient-to-br from-navy to-navy-dark overflow-hidden flex flex-col items-center justify-center text-white gap-4">
-          <LotusBloomIcon className="absolute -right-10 -bottom-10 w-56 h-56 text-white/5" />
-          <span className="flex h-16 w-16 items-center justify-center rounded-full bg-gold text-2xl relative">
-            ▶
-          </span>
-          <p className="text-sm text-white/70 relative">
-            Live during Sunday programs.
-          </p>
-        </div>
-        <div className="mt-6 flex flex-wrap gap-3">
-          <Button href="https://youtube.com" variant="secondary">
-            Subscribe on YouTube
-          </Button>
-          <Button href="https://facebook.com" variant="primary">
-            Follow on Facebook
-          </Button>
-        </div>
-      </section>
+      {SHOW_VIDEO_SECTIONS && (
+        <>
+          {/* Livestream */}
+          <section className="mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-20">
+            <SectionHeading eyebrow="Join Live" title="Livestream" />
+            <div className="mt-8 relative aspect-video w-full rounded-2xl bg-gradient-to-br from-navy to-navy-dark overflow-hidden flex flex-col items-center justify-center text-white gap-4">
+              <LotusBloomIcon className="absolute -right-10 -bottom-10 w-56 h-56 text-white/5" />
+              <span className="flex h-16 w-16 items-center justify-center rounded-full bg-gold text-2xl relative">
+                ▶
+              </span>
+              <p className="text-sm text-white/70 relative">
+                Live during Sunday programs.
+              </p>
+            </div>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Button href="https://youtube.com" variant="secondary">
+                Subscribe on YouTube
+              </Button>
+              <Button href="https://facebook.com" variant="primary">
+                Follow on Facebook
+              </Button>
+            </div>
+          </section>
 
-      {/* Archive */}
-      <section className="bg-cream">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-20">
-          <SectionHeading eyebrow="Watch Again" title="Video Archive" />
-          <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {archive.map((item) => (
-              <div key={item.title}>
-                <div className="relative aspect-video rounded-xl bg-gradient-to-br from-navy to-navy-dark overflow-hidden flex items-center justify-center">
-                  <item.icon className="w-14 h-14 text-gold-light" />
-                  <span className="absolute bottom-2 right-2 flex h-8 w-8 items-center justify-center rounded-full bg-gold text-white text-xs">
-                    ▶
-                  </span>
-                </div>
-                <p className="mt-3 text-sm font-semibold text-navy">
-                  {item.title}
-                </p>
+          {/* Archive */}
+          <section className="bg-cream">
+            <div className="mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-20">
+              <SectionHeading eyebrow="Watch Again" title="Video Archive" />
+              <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {archive.map((item) => (
+                  <div key={item.title}>
+                    <div className="relative aspect-video rounded-xl bg-gradient-to-br from-navy to-navy-dark overflow-hidden flex items-center justify-center">
+                      <item.icon className="w-14 h-14 text-gold-light" />
+                      <span className="absolute bottom-2 right-2 flex h-8 w-8 items-center justify-center rounded-full bg-gold text-white text-xs">
+                        ▶
+                      </span>
+                    </div>
+                    <p className="mt-3 text-sm font-semibold text-navy">
+                      {item.title}
+                    </p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </div>
+          </section>
+        </>
+      )}
 
       {/* Gallery */}
       <section id="gallery" className="mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-20 scroll-mt-24">

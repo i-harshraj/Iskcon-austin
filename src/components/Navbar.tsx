@@ -57,10 +57,10 @@ export default function Navbar() {
 
           <div className="hidden lg:flex items-center gap-3">
             <Link
-              href="/media"
+              href="/media#gallery"
               className="text-sm font-semibold text-navy hover:text-gold transition-colors"
             >
-              Watch Online
+              Photo Gallery
             </Link>
             <Link
               href="/donate"
