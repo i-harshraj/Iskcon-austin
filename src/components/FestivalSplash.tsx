@@ -3,12 +3,27 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
+// Turn the entry flyer on/off. To run it for a new event: drop the new
+// poster into /public/splash/, update FLYER below, and set this to true.
+const SPLASH_ENABLED = false;
+
+const FLYER = {
+  src: "/splash/festival-poster.png",
+  alt: "Celebrate Divine Joy at ISKCON Austin — three auspicious festivals: Balram Purnima on August 27, Sri Krishna Janmashtami on September 4, and Srila Prabhupada Appearance Day on September 5, 2026",
+  width: 593,
+  height: 885,
+};
+
 /**
  * Full-screen entry splash announcing upcoming festivals. Shown once per
  * browser session (tracked in sessionStorage) — visitors click anywhere in
  * the surrounding area to dismiss it and reach the site underneath.
  */
 export default function FestivalSplash() {
+  return SPLASH_ENABLED ? <Splash /> : null;
+}
+
+function Splash() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -46,10 +61,10 @@ export default function FestivalSplash() {
       <div className="relative max-w-xs sm:max-w-sm w-full text-center">
         <div className="relative w-full overflow-hidden rounded-2xl shadow-2xl ring-1 ring-white/10">
           <Image
-            src="/splash/festival-poster.png"
-            alt="Celebrate Divine Joy at ISKCON Austin — three auspicious festivals: Balram Purnima on August 27, Sri Krishna Janmashtami on September 4, and Srila Prabhupada Appearance Day on September 5, 2026"
-            width={593}
-            height={885}
+            src={FLYER.src}
+            alt={FLYER.alt}
+            width={FLYER.width}
+            height={FLYER.height}
             className="w-full h-auto"
             priority
           />
