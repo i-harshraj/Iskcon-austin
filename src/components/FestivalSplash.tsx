@@ -5,13 +5,13 @@ import Image from "next/image";
 
 // Turn the entry flyer on/off. To run it for a new event: drop the new
 // poster into /public/splash/, update FLYER below, and set this to true.
-const SPLASH_ENABLED = false;
+const SPLASH_ENABLED = true;
 
 const FLYER = {
-  src: "/splash/festival-poster.png",
-  alt: "Celebrate Divine Joy at ISKCON Austin — three auspicious festivals: Balram Purnima on August 27, Sri Krishna Janmashtami on September 4, and Srila Prabhupada Appearance Day on September 5, 2026",
-  width: 593,
-  height: 885,
+  src: "/splash/festival-poster-2.png",
+  alt: "Celebrate Divine Joy at ISKCON Austin — Shri Radha Ashtami Festival, Srimati Radha Rani's Appearance Day, on Sunday, September 13, 2026: kirtan 11:00–11:30 AM, glorification of Srimati Radha Rani 11:40 AM–12:30 PM, arati at 12:30 PM, followed by a feast",
+  width: 768,
+  height: 1365,
 };
 
 /**
@@ -58,7 +58,9 @@ function Splash() {
         if (e.key === "Enter" || e.key === " ") dismiss();
       }}
     >
-      <div className="relative max-w-xs sm:max-w-sm w-full text-center">
+      {/* Widths are capped against the viewport height too — this poster is
+          tall, so on short screens the height is what limits it, not the width. */}
+      <div className="relative w-full max-w-[min(22rem,44vh)] sm:max-w-[min(28rem,48vh)] text-center">
         <div className="relative w-full overflow-hidden rounded-2xl shadow-2xl ring-1 ring-white/10">
           <Image
             src={FLYER.src}
