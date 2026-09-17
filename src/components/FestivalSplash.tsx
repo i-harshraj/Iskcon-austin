@@ -60,7 +60,7 @@ function Splash() {
     >
       {/* Widths are capped against the viewport height too — this poster is
           tall, so on short screens the height is what limits it, not the width. */}
-      <div className="relative w-full max-w-[min(22rem,44vh)] sm:max-w-[min(28rem,48vh)] text-center">
+      <div className="relative w-full max-w-[min(24rem,44vh)] sm:max-w-[min(32rem,44vh)] text-center">
         <div className="relative w-full overflow-hidden rounded-2xl shadow-2xl ring-1 ring-white/10">
           <Image
             src={FLYER.src}
