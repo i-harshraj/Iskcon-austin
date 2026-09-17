@@ -8,8 +8,8 @@ import Image from "next/image";
 const SPLASH_ENABLED = true;
 
 const FLYER = {
-  src: "/splash/festival-poster-2.png",
-  alt: "Celebrate Divine Joy at ISKCON Austin — Shri Radha Ashtami Festival, Srimati Radha Rani's Appearance Day, on Sunday, September 13, 2026: kirtan 11:00–11:30 AM, glorification of Srimati Radha Rani 11:40 AM–12:30 PM, arati at 12:30 PM, followed by a feast",
+  src: "/splash/radha-ashtami-2026.png",
+  alt: "Celebrate Divine Joy at ISKCON Austin — Shri Radha Ashtami Festival, Srimati Radha Rani's Appearance Day, on Saturday, September 19, 2026: kirtan 11:00–11:30 AM, glorification of Srimati Radha Rani 11:40 AM–12:30 PM, arati at 12:30 PM, followed by a feast",
   width: 768,
   height: 1365,
 };
