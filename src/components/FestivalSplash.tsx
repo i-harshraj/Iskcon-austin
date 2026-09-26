@@ -5,7 +5,7 @@ import Image from "next/image";
 
 // Turn the entry flyer on/off. To run it for a new event: drop the new
 // poster into /public/splash/, update FLYER below, and set this to true.
-const SPLASH_ENABLED = true;
+const SPLASH_ENABLED = false;
 
 const FLYER = {
   src: "/splash/radha-ashtami-2026.png",
