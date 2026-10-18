@@ -98,7 +98,8 @@ export default function SundayLocationPage() {
                   alt={`Sunday Programs location — photo ${i + 1}`}
                   fill
                   sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-                  className="object-cover"
+                  // Photo 2: anchor left so the speaker isn't cropped out.
+                  className={`object-cover ${src.endsWith("temple-life-02.jpg") ? "object-left" : "object-center"}`}
                 />
                 <CornerFrame tone="gold" size={14} inset={7} />
               </div>

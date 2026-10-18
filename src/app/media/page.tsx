@@ -41,6 +41,8 @@ const gallerySections: GallerySection[] = [
     photos: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13].map((n, i) => ({
       src: `/gallery/temple-life-${String(n).padStart(2, "0")}.jpg`,
       alt: `Temple Life — Photo ${i + 1}`,
+      // Photo 2: keep the speaker on the left edge in frame when cropped.
+      ...(n === 2 ? { position: "left" as const } : {}),
     })),
   },
   {

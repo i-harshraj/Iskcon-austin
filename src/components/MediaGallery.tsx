@@ -7,7 +7,16 @@ import { CornerFrame } from "@/components/ornaments";
 type GalleryPhoto = {
   src: string;
   alt: string;
+  // Which part of the photo to keep when the square thumbnail crops it.
+  // Defaults to center. Use "left"/"right" when the subject sits at an edge.
+  position?: "left" | "center" | "right";
 };
+
+const positionClass = {
+  left: "object-left",
+  center: "object-center",
+  right: "object-right",
+} as const;
 
 export type GallerySection = {
   key: string;
@@ -92,7 +101,7 @@ export default function MediaGallery({
                   alt={photo.alt}
                   fill
                   sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className={`object-cover ${positionClass[photo.position ?? "center"]} transition-transform duration-500 group-hover:scale-105`}
                 />
                 <div className="absolute inset-0 bg-navy-dark/0 group-hover:bg-navy-dark/10 transition-colors" />
                 <CornerFrame tone="white" size={14} inset={7} />
