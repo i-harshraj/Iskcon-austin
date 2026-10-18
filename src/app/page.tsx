@@ -10,11 +10,18 @@ import { CornerFrame, OrnamentDivider } from "@/components/ornaments";
 import HeroCarousel from "@/components/HeroCarousel";
 import LocationCards from "@/components/LocationCards";
 import JoinCourseBanner from "@/components/JoinCourseBanner";
-import { campaignPercent, events, givingFunds, weeklySchedule } from "@/lib/data";
+import FlyerViewer from "@/components/FlyerViewer";
+import {
+  campaignPercent,
+  givingFunds,
+  parseEventDate,
+  upcomingEvents,
+  weeklySchedule,
+} from "@/lib/data";
 
 export default function HomePage() {
   const sundayItems = weeklySchedule.filter((s) => s.day === "Sunday");
-  const upcoming = events.slice(0, 3);
+  const upcoming = upcomingEvents().slice(0, 3);
 
   return (
     <div>
@@ -130,28 +137,42 @@ export default function HomePage() {
             View Full Calendar →
           </Link>
         </div>
-        <div className="mt-10 grid sm:grid-cols-3 gap-6">
+        <div
+          className={`mt-10 grid gap-6 ${
+            upcoming.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"
+          }`}
+        >
           {upcoming.map((e) => (
-            <Card key={`${e.title}-${e.date}`} className="p-6 flex flex-col">
-              <span className="inline-block w-fit rounded-full bg-cream px-3 py-1 text-xs font-semibold uppercase tracking-wide text-navy">
-                {e.category}
-              </span>
-              <p className="mt-3 text-xs font-semibold text-gold">
-                {new Date(e.date).toLocaleDateString("en-US", {
-                  month: "long",
-                  day: "numeric",
-                  year: "numeric",
-                })}
-              </p>
-              <h3 className="font-display text-xl font-semibold text-navy mt-1">
-                {e.title}
-              </h3>
-              <p className="mt-2 text-sm text-ink-soft leading-relaxed flex-1">
-                {e.description}
-              </p>
+            <Card key={`${e.title}-${e.date}`} className="flex flex-col">
+              {e.flyer && <FlyerViewer flyer={e.flyer} title={e.title} />}
+              <div className="p-6 flex flex-col flex-1">
+                <span className="inline-block w-fit rounded-full bg-cream px-3 py-1 text-xs font-semibold uppercase tracking-wide text-navy">
+                  {e.category}
+                </span>
+                <p className="mt-3 text-xs font-semibold text-gold">
+                  {parseEventDate(e.date).toLocaleDateString("en-US", {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                  {" · "}
+                  {e.time}
+                </p>
+                <h3 className="font-display text-xl font-semibold text-navy mt-1">
+                  {e.title}
+                </h3>
+                <p className="mt-2 text-sm text-ink-soft leading-relaxed flex-1">
+                  {e.description}
+                </p>
+              </div>
             </Card>
           ))}
         </div>
+        {upcoming.length === 0 && (
+          <p className="mt-10 text-center text-ink-soft text-sm">
+            No events scheduled right now — check back soon.
+          </p>
+        )}
       </section>
 
       {/* Newsletter */}

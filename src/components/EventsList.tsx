@@ -3,7 +3,8 @@
 import { useMemo, useState } from "react";
 import { Card, Pill } from "@/components/ui";
 import { MapPinIcon } from "@/components/devotional-art";
-import { events, type EventCategory } from "@/lib/data";
+import FlyerViewer from "@/components/FlyerViewer";
+import { parseEventDate, upcomingEvents, type EventCategory } from "@/lib/data";
 
 const categories: (EventCategory | "All")[] = [
   "All",
@@ -18,10 +19,8 @@ export default function EventsList() {
   const [filter, setFilter] = useState<(typeof categories)[number]>("All");
   const [visible, setVisible] = useState(PAGE_SIZE);
 
-  const sorted = useMemo(
-    () => [...events].sort((a, b) => a.date.localeCompare(b.date)),
-    []
-  );
+  // Upcoming only, soonest first — past events drop off automatically.
+  const sorted = useMemo(() => upcomingEvents(), []);
 
   const filtered = useMemo(
     () =>
@@ -52,13 +51,15 @@ export default function EventsList() {
 
       <div className="mt-8 grid sm:grid-cols-2 gap-6">
         {filtered.slice(0, visible).map((e) => (
-          <Card key={`${e.title}-${e.date}`} className="p-6 flex flex-col sm:flex-row gap-5">
-            <div className="shrink-0 w-20 text-center rounded-xl bg-cream py-3">
+          <Card key={`${e.title}-${e.date}`} className="flex flex-col">
+            {e.flyer && <FlyerViewer flyer={e.flyer} title={e.title} />}
+            <div className="p-6 flex flex-col sm:flex-row gap-5 flex-1">
+            <div className="shrink-0 w-20 self-start text-center rounded-xl bg-cream py-3">
               <p className="text-xs font-semibold uppercase text-gold">
-                {new Date(e.date).toLocaleDateString("en-US", { month: "short" })}
+                {parseEventDate(e.date).toLocaleDateString("en-US", { month: "short" })}
               </p>
               <p className="text-2xl font-display font-bold text-navy">
-                {new Date(e.date).getDate()}
+                {parseEventDate(e.date).getDate()}
               </p>
             </div>
             <div>
@@ -76,6 +77,7 @@ export default function EventsList() {
                   {e.location}
                 </p>
               </div>
+            </div>
             </div>
           </Card>
         ))}

@@ -264,6 +264,13 @@ export const virtualTourImages = [
 
 export type EventCategory = "Festival" | "Class" | "Community";
 
+export type EventFlyer = {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+};
+
 export const events: {
   title: string;
   date: string; // ISO date, TODO: replace with real dates
@@ -271,6 +278,10 @@ export const events: {
   description: string;
   location: string;
   time: string; // TODO: confirm exact timing with the temple calendar
+  // Optional event flyer, shown as a tappable preview (with a full-size
+  // viewer + download) on the homepage and the events calendar. To add one:
+  // drop the image in /public/events/ and fill this in.
+  flyer?: EventFlyer;
 }[] = [
   {
     title: "Janmashtami — Appearance of Lord Krishna",
@@ -292,9 +303,15 @@ export const events: {
     title: "Govardhan Puja",
     date: "2026-11-09",
     category: "Festival",
-    description: "Annapurna offering of 108 preparations and re-enactment of Krishna lifting Govardhan Hill.",
+    description: "Kirtan, a lecture with Q&A, and aarti — followed by the Grand Feast.",
     location: "12012 N Interstate 35, Austin, TX 78753", // I-35 location
-    time: "6:00 PM – 8:30 PM",
+    time: "6:00 PM – 7:00 PM, then the Grand Feast",
+    flyer: {
+      src: "/events/govardhan-pooja-2026.jpg",
+      alt: "Govardhan Pooja at ISKCON Austin, Monday, November 9, 2026, at 12012 N Interstate 35, Austin, TX 78753: kirtan 6:00–6:20 PM CT, lecture and Q&A 6:20–7:00 PM CT, aarti at 7:00 PM CT followed by the Grand Feast",
+      width: 1545,
+      height: 2000,
+    },
   },
   {
     title: "Prabhupada Marathon Book Distribution",
@@ -308,11 +325,36 @@ export const events: {
     title: "Diwali / Dipavali Celebration",
     date: "2026-11-08",
     category: "Festival",
-    description: "No celebration is planned at the temple this year — check back for updates in future years.",
+    description: "A festival of lights for the whole family: offering ghee lamps and flowers to the Lord, face painting, henna, a book stall, and skits/drama.",
     location: "12012 N Interstate 35, Austin, TX 78753",
-    time: "No celebration this year",
+    time: "11:00 AM – 2:00 PM",
+    flyer: {
+      src: "/events/diwali-celebration-2026.jpg",
+      alt: "Diwali Celebration at ISKCON Austin, Sunday, November 8, 2026, 11:00 AM to 2:00 PM CT, at 12012 N Interstate 35, Austin, TX 78753: group celebration with offering of ghee lamps and flowers to the Lord, face painting, henna, a book stall, and skits/drama",
+      width: 1545,
+      height: 2000,
+    },
   },
 ] as const;
+
+// Event dates are plain calendar days ("2026-11-08"). Parsing them with a
+// bare `new Date("2026-11-08")` treats them as UTC midnight, which shows up
+// as the *previous* day for visitors in US time zones — so anchor them to
+// local midnight instead.
+export function parseEventDate(iso: string) {
+  return new Date(`${iso}T00:00:00`);
+}
+
+// Events that haven't happened yet (today still counts), soonest first.
+// Used by the homepage and the events calendar so past events drop off
+// automatically the next time the site is deployed.
+export function upcomingEvents() {
+  const now = new Date();
+  const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+  return [...events]
+    .filter((e) => e.date >= today)
+    .sort((a, b) => a.date.localeCompare(b.date));
+}
 
 // Ongoing outreach programs — recurring activities without a single fixed
 // date, shown separately from the dated events calendar.
