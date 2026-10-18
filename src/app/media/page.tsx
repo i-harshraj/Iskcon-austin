@@ -37,9 +37,10 @@ const gallerySections: GallerySection[] = [
     label: "Temple Life",
     description:
       "Sunday programs, kirtan, Deity darshan, and everyday moments at the temple.",
-    photos: Array.from({ length: 13 }, (_, i) => i + 1).map((i) => ({
-      src: `/gallery/temple-life-${String(i).padStart(2, "0")}.jpg`,
-      alt: `Temple Life — Photo ${i}`,
+    // File numbers in /public/gallery/ to show (12 intentionally left out).
+    photos: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13].map((n, i) => ({
+      src: `/gallery/temple-life-${String(n).padStart(2, "0")}.jpg`,
+      alt: `Temple Life — Photo ${i + 1}`,
     })),
   },
   {
@@ -47,13 +48,13 @@ const gallerySections: GallerySection[] = [
     label: "Ratha Yatra Festival",
     description:
       "Scenes from ISKCON Austin's Ratha Yatra chariot festival celebrations.",
-    photos: Array.from({ length: 18 }, (_, i) => {
-      const n = String(i + 1).padStart(2, "0");
-      return {
-        src: `/gallery/ratha-yatra-${n}.jpg`,
+    // File numbers in /public/gallery/ to show (07 and 11 intentionally left out).
+    photos: [1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18].map(
+      (n, i) => ({
+        src: `/gallery/ratha-yatra-${String(n).padStart(2, "0")}.jpg`,
         alt: `Ratha Yatra Festival — Photo ${i + 1}`,
-      };
-    }),
+      })
+    ),
   },
   {
     key: "festivals",
